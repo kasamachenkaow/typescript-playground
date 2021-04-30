@@ -29,5 +29,7 @@ const ar: AR = {
   ]  
 }
 
+ar.captures[0].R3
+ar.captures[0].R4
 ar.captures[0].R5
-ar.captures.map(r => r.R5)
+ar.captures.map(r => r.R3 && r.R4 && r.R5)

@@ -9,7 +9,7 @@ type AmazingIntersect<T1, T2> =
     T2 extends Record<infer UKey2, infer UVal2> ?
       UKey2 extends UKey1 ?
         [T1[UKey2], UVal2] extends [(infer UT1)[], (infer UT2)[]] ?
-          Omit<T1, UKey2> & Omit<T2, UKey2> & Record<UKey2, (UT1 & UT2)[]> :
+          Omit<T1, UKey2> & Omit<T2, UKey2> & Record<UKey2, (UT1 & UT2)[]>:
           T1 & T2:
         T1 & T2:
       T1 & T2:
@@ -20,13 +20,11 @@ type AR = AmazingIntersect<AmazingIntersect<AmazingIntersect<AmazingIntersect<RA
 const ar: AR = {
   R1: 's',
   R2: 's',
-  captures: [
-      {
-          R3: 's',
-          R4: 's',
-          R5: 's',
-      }
-  ]  
+  captures: [{
+     R3: 's',
+     R4: 's',
+     R5: 's',
+  }],
 }
 
 ar.captures[0].R3

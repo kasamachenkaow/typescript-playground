@@ -23,7 +23,7 @@ type LoopIntersect<T> =
   T extends [infer U1, infer U2, ...infer Us] ? LoopIntersect<[AmazingIntersect<U1, U2>, ...Us]> : 
   T extends [infer Us] ? Us : never
 
-type AR = LoopIntersect<[RA1, RA2, RA3, RA4, RA5, TA1, TA2]>
+type AR = LoopIntersect<[RA1, RA2, RA3, TA1, RA4, RA5, TA2]>
 
 const ar: AR = {
   R1: 's',

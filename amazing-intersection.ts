@@ -1,26 +1,23 @@
-type ArrayType<T> = T extends Array<infer U> ? U : T
-
-type IntersectArray<T1, T2> = Array<ArrayType<T1> & ArrayType<T2>> 
-
 type RA1 = Record<'R1', string>
 type RA2 = Record<'R2', string>
-type RA3 = { captures: Record<'R3', string>[] }
-type RA4 = { captures: Record<'R4', string>[] }
-type RA5 = { captures: Record<'R5', string>[] }
+type RA3 = Record<'captures', Record<'R3', string>[]>
+type RA4 = Record<'captures', Record<'R4', string>[]>
+type RA5 = Record<'captures', Record<'R5', string>[]> 
 
-type UR = RA1 | RA2 | RA3 | RA4
-type AR = RA1 & RA2 & RA3 & RA4
-
-type CapturesIntersect<T1, T2> = 
-  T1 extends { captures: (infer U1)[] } ? 
-    T2 extends { captures: (infer U2)[] } ?
-      Omit<T1, 'captures'> & Omit<T2, 'captures'> & { captures: (U1 & U2)[] } :
-      T1 & T2 :
+type AmazingIntersect<T1, T2> = 
+  T1 extends Record<infer UKey1, unknown> ? 
+    T2 extends Record<infer UKey2, infer UVal2> ?
+      UKey2 extends UKey1 ?
+        [T1[UKey2], UVal2] extends [(infer UT1)[], (infer UT2)[]] ?
+          Omit<T1, UKey2> & Omit<T2, UKey2> & Record<UKey2, (UT1 & UT2)[]> :
+          T1 & T2:
+        T1 & T2:
+      T1 & T2:
     T1 & T2
-    
-type AR2 = CapturesIntersect<CapturesIntersect<CapturesIntersect<CapturesIntersect<RA1, RA2>, RA3>, RA4>, RA5>
 
-const ar: AR2 = {
+type AR = AmazingIntersect<AmazingIntersect<AmazingIntersect<AmazingIntersect<RA1, RA2>, RA3>, RA4>, RA5>
+
+const ar: AR = {
   R1: 's',
   R2: 's',
   captures: [
